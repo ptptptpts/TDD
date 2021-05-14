@@ -1,5 +1,8 @@
 package com.ts89park.tdd;
 
+import static com.ts89park.util.OutputVerifier.assertTwoTableSame;
+import static com.ts89park.util.OutputVerifier.assertTwoTreeSame;
+import static com.ts89park.util.OutputVerifier.assertTwoCsvSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -15,6 +18,9 @@ import org.junit.jupiter.api.Test;
 
 class WebSiteMapPrinterTest {
 
+    // TODO:: Test with complex cycle that can create a duplicate item
+    // TODO:: Verify no duplicate line
+
     @Nested
     class CsvPrintTest {
 
@@ -26,7 +32,10 @@ class WebSiteMapPrinterTest {
 
             String testOutput = printer.printWebSiteMap(root);
 
-            compareCsvResult(rootUrl, testOutput);
+            System.out.println(rootUrl);
+            System.out.println(testOutput);
+
+            assertTwoCsvSame(rootUrl, testOutput);
         }
 
         @Test
@@ -43,7 +52,10 @@ class WebSiteMapPrinterTest {
 
             String testOutput = printer.printWebSiteMap(root);
 
-            compareCsvResult(solution, testOutput);
+            System.out.println(solution);
+            System.out.println(testOutput);
+
+            assertTwoCsvSame(solution, testOutput);
         }
 
         @Test
@@ -81,7 +93,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution.toString());
             System.out.println(testOutput);
 
-            compareCsvResult(solution.toString(), testOutput);
+            assertTwoCsvSame(solution.toString(), testOutput);
         }
 
         @Test
@@ -100,7 +112,10 @@ class WebSiteMapPrinterTest {
 
             String testOutput = printer.printWebSiteMap(root);
 
-            compareCsvResult(solution, testOutput);
+            System.out.println(solution);
+            System.out.println(testOutput);
+
+            assertTwoCsvSame(solution, testOutput);
         }
 
         @Test
@@ -131,7 +146,10 @@ class WebSiteMapPrinterTest {
 
             String testOutput = printer.printWebSiteMap(rootNode);
 
-            compareCsvResult(solution, testOutput);
+            System.out.println(solution);
+            System.out.println(testOutput);
+
+            assertTwoCsvSame(solution, testOutput);
         }
 
         @Test
@@ -144,7 +162,7 @@ class WebSiteMapPrinterTest {
             String[] childChildsUrl = new String[]{grandChildUrl};
             String[] grandChildChildsUrl = new String[]{rootUrl};
 
-            String solution = buildCsvLine(rootUrl, childChildsUrl) + "\n"
+            String solution = buildCsvLine(rootUrl, rootChildsUrl) + "\n"
                     + buildCsvLine(childUrl, childChildsUrl) + "\n"
                     + buildCsvLine(grandChildUrl, grandChildChildsUrl) + "\n";
 
@@ -171,7 +189,10 @@ class WebSiteMapPrinterTest {
 
             String testOutput = printer.printWebSiteMap(rootNode);
 
-            compareCsvResult(solution, testOutput);
+            System.out.println(solution);
+            System.out.println(testOutput);
+
+            assertTwoCsvSame(solution, testOutput);
         }
 
         private String buildCsvLine(String head, String[] childs) {
@@ -183,43 +204,6 @@ class WebSiteMapPrinterTest {
                 }
             }
             return sb.toString();
-        }
-
-        private void compareCsvResult(String expected, String actual) {
-            String[] expectedLines = expected.trim().split("\n");
-            String[] actualLines = actual.trim().split("\n");
-
-            for (String solutionLine : expectedLines) {
-                boolean isFind = false;
-                for (String testLine : actualLines) {
-                    isFind |= compareCsvLine(solutionLine, testLine);
-                }
-                assertTrue(isFind);
-            }
-        }
-
-        private boolean compareCsvLine(String expectedLine, String actualLine) {
-            boolean ret = true;
-            String[] expectedItems = expectedLine.split(",");
-            String[] actualItems = actualLine.split(",");
-
-            for (String expectedItem : expectedItems) {
-                boolean isFind = false;
-                for (String actualItem : actualItems) {
-                    isFind |= expectedItem.equals(actualItem);
-                }
-                ret &= isFind;
-            }
-
-            for (String actualItem : actualItems) {
-                boolean isFind = false;
-                for (String expectedItem : expectedItems) {
-                    isFind |= expectedItem.equals(actualItem);
-                }
-                ret &= isFind;
-            }
-
-            return ret;
         }
     }
 
@@ -236,7 +220,7 @@ class WebSiteMapPrinterTest {
 
             System.out.println(rootUrl);
             System.out.println(testOutput);
-            assertIfTreeDifferent(rootUrl, testOutput);
+            assertTwoTreeSame(rootUrl, testOutput);
         }
 
         @Test
@@ -254,7 +238,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTreeDifferent(solution, testOutput);
+            assertTwoTreeSame(solution, testOutput);
         }
 
         @Test
@@ -286,7 +270,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTreeDifferent(solution, testOutput);
+            assertTwoTreeSame(solution, testOutput);
         }
 
         @Test
@@ -308,7 +292,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTreeDifferent(solution, testOutput);
+            assertTwoTreeSame(solution, testOutput);
         }
 
         @Test
@@ -340,7 +324,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTreeDifferent(solution, testOutput);
+            assertTwoTreeSame(solution, testOutput);
         }
 
         @Test
@@ -380,7 +364,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTreeDifferent(solution, testOutput);
+            assertTwoTreeSame(solution, testOutput);
         }
 
         @Test
@@ -426,7 +410,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTreeDifferent(solution, testOutput);
+            assertTwoTreeSame(solution, testOutput);
         }
 
         private String buildTreeLine(String url, int level) {
@@ -434,24 +418,6 @@ class WebSiteMapPrinterTest {
                 return url;
             } else {
                 return "  ".repeat(Math.max(0, level)) + "|- " + url;
-            }
-        }
-
-        private void assertIfTreeDifferent(String expected, String actual) {
-            String[] expectedLines = expected.trim().split("\n");
-            String[] actualLines = actual.trim().split("\n");
-
-            findTreeLineFromAToB(expectedLines, actualLines);
-            findTreeLineFromAToB(actualLines, expectedLines);
-        }
-
-        private void findTreeLineFromAToB(String[] treeLinesA, String[] treeLinesB) {
-            for (String treeLineA : treeLinesA) {
-                boolean isFind = false;
-                for (String treeLineB : treeLinesB) {
-                    isFind |= treeLineA.equals(treeLineB);
-                }
-                assertTrue(isFind, "Expected String " + treeLineA + " is missing");
             }
         }
     }
@@ -473,7 +439,7 @@ class WebSiteMapPrinterTest {
 
             System.out.println(solution);
             System.out.println(testOutput);
-            assertIfTableDifferent(solution, testOutput);
+            assertTwoTableSame(solution, testOutput);
         }
 
         @Test
@@ -493,7 +459,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTableDifferent(solution, testOutput);
+            assertTwoTableSame(solution, testOutput);
         }
 
         @Test
@@ -530,7 +496,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTableDifferent(solution, testOutput);
+            assertTwoTableSame(solution, testOutput);
         }
 
         @Test
@@ -556,7 +522,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTableDifferent(solution, testOutput);
+            assertTwoTableSame(solution, testOutput);
         }
 
         @Test
@@ -590,7 +556,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTableDifferent(solution, testOutput);
+            assertTwoTableSame(solution, testOutput);
         }
 
         @Test
@@ -632,7 +598,7 @@ class WebSiteMapPrinterTest {
             System.out.println(solution);
             System.out.println(testOutput);
 
-            assertIfTableDifferent(solution, testOutput);
+            assertTwoTableSame(solution, testOutput);
         }
 
         private String buildLegends(String[] urls) {
@@ -682,108 +648,6 @@ class WebSiteMapPrinterTest {
             sb.append("\n");
 
             return sb.toString();
-        }
-
-        private class TableNode {
-
-            int id;
-            String url;
-            HashSet<Integer> children = new HashSet<>();
-
-            public TableNode(int id, String url) {
-                this.id = id;
-                this.url = url;
-            }
-        }
-
-        private void assertIfTableDifferent(String expected, String actual) {
-            TableNode[] expectedTableNode = parseTableString(expected);
-            TableNode[] actualTableNode = parseTableString(actual);
-
-            compareTableNodes(expectedTableNode, actualTableNode);
-            compareTableNodes(actualTableNode, expectedTableNode);
-        }
-
-        private void compareTableNodes(TableNode[] expected, TableNode[] actual) {
-            for (TableNode expectNode : expected) {
-                boolean isExist = false;
-                int actualId = findTableId(actual, expectNode.url);
-
-                if (actualId != -1) {
-                    isExist = isChildExistOnTable(expected, actual, expectNode);
-                }
-
-                assertTrue(isExist);
-            }
-        }
-
-        private boolean isChildExistOnTable(TableNode[] expected, TableNode[] actual,
-                TableNode expectNode) {
-            boolean isExist = false;
-
-            for (Integer expectChildId : expectNode.children) {
-                int actualChildId = findTableId(actual, expected[expectChildId].url);
-                if (actualChildId != -1) {
-                    isExist = true;
-                    break;
-                }
-            }
-
-            return isExist;
-        }
-
-        private int findTableId(TableNode[] actual, String url) {
-            int id = -1;
-
-            for (TableNode actualNode : actual) {
-                if (url.equals(actualNode.url)) {
-                    id = actualNode.id;
-                    break;
-                }
-            }
-
-            return id;
-        }
-
-        private TableNode[] parseTableString(String table) {
-            String[] splitTable = table.split("\n\n");
-            if (splitTable.length == 2) {
-                TableNode[] tableNodes = buildTableNodeFromLegends(splitTable[0].trim());
-                return parseTableData(tableNodes, splitTable[1].trim());
-            } else {
-                return new TableNode[]{};
-            }
-        }
-
-        private TableNode[] buildTableNodeFromLegends(String legends) {
-            ArrayList<TableNode> nodes = new ArrayList<>();
-
-            for (String legend : legends.split("\n")) {
-                String[] parsedLegend = legend.split("\t");
-                if (parsedLegend.length == 2) {
-                    nodes.add(new TableNode(Integer.parseInt(parsedLegend[0]), parsedLegend[1]));
-                }
-            }
-
-            return nodes.toArray(new TableNode[]{});
-        }
-
-        private TableNode[] parseTableData(TableNode[] tableNodes, String dataTable) {
-            String[] tableRows = dataTable.split("\n");
-
-            for (int i = 2; i < tableRows.length; i++) {
-                String[] items = tableRows[i].split("[|\\s]");
-
-                for (int itemCursor = 1; itemCursor < items.length; itemCursor++) {
-                    String trimmedItem = items[itemCursor].trim();
-                    if (trimmedItem.length() > 0) {
-                        int childId = Integer.parseInt(trimmedItem);
-                        tableNodes[i - 2].children.add(childId);
-                    }
-                }
-            }
-
-            return tableNodes;
         }
     }
 

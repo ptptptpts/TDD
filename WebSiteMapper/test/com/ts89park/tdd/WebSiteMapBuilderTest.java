@@ -385,7 +385,7 @@ class WebSiteMapBuilderTest {
 
             assertNotNull(root);
             assertEquals(testRootUrl, root.getUrl());
-            assertEquals(0, root.getChildSet().size());
+            assertEquals(1, root.getChildSet().size());
         }
 
         @Test
@@ -452,11 +452,18 @@ class WebSiteMapBuilderTest {
 
             assertEquals(root, grandChildNode.getChildSet().toArray(new WebSiteMapNode[]{})[0]);
         }
+
+        // TODO:: Test with zero depth
+
+        // TODO:: Test with more complex cycle that can create a duplicate node
+
+        // TODO:: Verify no duplicate node
     }
 
     @Nested
     class TestOnRealNetwork {
 
+        // TODO:: Make test on the below address
         /*
          * TestUrl:
          * https://korehtml5.kr (Acceptable on depth 3)

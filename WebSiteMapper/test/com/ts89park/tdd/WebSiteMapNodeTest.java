@@ -34,7 +34,7 @@ class WebSiteMapNodeTest {
 
         node.putChild(testNode);
 
-        assertEquals(0, node.getChildSet().size());
+        assertEquals(1, node.getChildSet().size());
     }
 
     @ParameterizedTest

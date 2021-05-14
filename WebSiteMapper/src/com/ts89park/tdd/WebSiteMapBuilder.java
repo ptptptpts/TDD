@@ -33,7 +33,6 @@ public class WebSiteMapBuilder {
         searchNodeQueue.add(root);
 
         for (int depth = 0; (depth < maxDepth) && (searchNodeQueue.size() > 0); depth++) {
-            System.out.println(depth);
             searchNodeQueue = buildChildMap(entireMapNodes, reader, searchNodeQueue);
         }
 

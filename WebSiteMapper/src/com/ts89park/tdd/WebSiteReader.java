@@ -1,5 +1,6 @@
 package com.ts89park.tdd;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,7 +20,8 @@ public class WebSiteReader {
         return builder.toString();
     }
 
-    private StringBuilder getContentFromUrl(InputStream urlStream) throws Exception {
+    @VisibleForTesting
+    public StringBuilder getContentFromUrl(InputStream urlStream) throws Exception {
         StringBuilder content = new StringBuilder();
         BufferedReader urlReader = new BufferedReader(new InputStreamReader(urlStream));
 

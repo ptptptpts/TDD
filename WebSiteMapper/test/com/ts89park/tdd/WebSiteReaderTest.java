@@ -16,4 +16,10 @@ class WebSiteReaderTest {
         assertNotNull(content);
         assertTrue(content.length() > 0);
     }
+
+    // TODO: Invalid URL
+
+    // TODO: Empty URL
+
+    // TODO: null URL
 }

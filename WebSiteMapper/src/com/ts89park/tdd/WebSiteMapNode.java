@@ -22,9 +22,7 @@ public class WebSiteMapNode {
             String childUrl = child.getUrl();
 
             if ((childUrl != null) && (childUrl.length() > 0)) {
-                if (!childUrl.equals(this.url)) {
-                    childSet.add(child);
-                }
+                childSet.add(child);
             }
         }
     }
