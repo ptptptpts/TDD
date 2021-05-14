@@ -21,10 +21,14 @@ public abstract class WebSiteMapPrinter {
             nextPrintQueue.add(root);
             while (!nextPrintQueue.isEmpty()) {
                 WebSiteMapNode currentNode = nextPrintQueue.poll();
-                printedNodes.add(currentNode.getUrl());
+                String currentUrl = currentNode.getUrl();
+                
+                if (!printedNodes.contains(currentUrl)) {
+                    printedNodes.add(currentUrl);
 
-                builder.append(printOneNodeByCsv(currentNode));
-                nextPrintQueue.addAll(findNotPrintedChilds(currentNode, printedNodes));
+                    builder.append(printOneNodeByCsv(currentNode));
+                    nextPrintQueue.addAll(findNotPrintedChilds(currentNode, printedNodes));
+                }
             }
 
             return builder.toString();
