@@ -54,7 +54,7 @@ public class StepDefinitions {
     private WebSiteReader reader;
     private String output;
 
-    @Given("Return two depth html document for testing when read from the given url")
+    @Given("^Return two depth html document for testing when read from the given url$")
     public void returnTwoDepthHtmlDocumentForTestingWhenReadFromTheGivenUrl() {
         reader = mock(WebSiteReader.class);
         when(reader.readContentFromLink(ROOT_URL))
@@ -73,13 +73,13 @@ public class StepDefinitions {
                 .thenReturn("");
     }
 
-    @Given("Return an empty html document when read from the given url")
+    @Given("^Return an empty html document when read from the given url$")
     public void returnAnEmptyHtmlDocumentWhenReadFromTheGivenUrl() {
         reader = mock(WebSiteReader.class);
         when(reader.readContentFromLink(anyString())).thenReturn("");
     }
 
-    @Given("Return a Exception when read from the given url")
+    @Given("^Return a Exception when read from the given url$")
     public void returnAExceptionWhenReadFromTheGivenUrl() {
         reader = spy(WebSiteReader.class);
         try {
@@ -89,7 +89,7 @@ public class StepDefinitions {
         }
     }
 
-    @When("Build WebsiteMap with the given url with {int} depth")
+    @When("^Build WebsiteMap with the given url with {int} depth$")
     public void buildWebsiteMapWithTheGivenUrlWithDepth(int depth) {
         WebSiteMapBuilder builder = new WebSiteMapBuilder();
         WebSiteMapPrinter printer = new CsvWebSiteMapPrinter();
